@@ -1,5 +1,8 @@
 /**
  * General format of an switch statement
+ * Switch statements are used when you have a lot of if/else if statements
+ * and you want to make your code more readable.
+ * Switch comparison is in a strict sense, meaning that it checks for value and type.
  */
 // switch (condition) {
 //     case value1:
@@ -20,13 +23,16 @@ let soup = "chicken noodle";
 let reply;
 let customerIsBanned = true;
 
-if (customerIsBanned) {
-    reply = "You are banned from the store.";
-} else if (soup) {
-    // reply = "Here is your " + soup + " soup.";
-    reply = `Here is your ${soup} soup.`; // this is using template literals
-} else {
-    reply = "Sorry, we're out of soup.";
+switch (true) {
+    case customerIsBanned:
+        reply = "You are banned from the store.";
+        break;
+    case soup:
+        reply = `Here is your ${soup} soup.`;
+        break;
+    default:
+        reply = "Sorry, we're out of soup.";
+        break;
 }
 
 console.log(reply);
@@ -83,4 +89,44 @@ if (playerOne === computer) {
     }
 }
 
+
+console.log("Switch statement version");
+switch (playerOne) {
+    case computer:
+        // tie
+        break;
+    case "rock":
+        switch (computer) {
+            case "scissors":
+                // playerOne wins
+                break;
+            default:
+                // computer wins
+                break;
+        }
+        break;
+    case "scissors":
+        switch (computer) {
+            case "rock":
+                // computer wins
+                break;
+            default:
+                // playerOne wins
+                break;
+        }
+        break;
+    case "paper":
+        switch (computer) {
+            case "rock":
+                // playerOne wins
+                break;
+            default:
+                // computer wins
+                break;
+        }
+        break;
+    default:
+        console.log("Invalid input");
+        break;
+}
 
