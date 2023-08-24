@@ -1,6 +1,8 @@
 // Fetch Api
 // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
+const { get } = require("mongoose");
+
 
 // Requires a discussion of Callbacks, Promises, Thenables and Async/Await
 
@@ -121,6 +123,82 @@ const logUsers = async () => {
 logUsers()
 console.log(myUsers.userList);
 
+
+
+// Workflow function
+// 2nd parameter of fetch() is an object that contains the method, body and headers
+const getAllUserEmails = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    }); // we need to await since this fetch() returns a promise
+    const data = await response.json(); // we need to await since this .json() returns a promise
+
+    const emailsArray = data.map(user => user.email);
+
+    postToWebpage(emailsArray);
+}
+
+const postToWebpage = (emails) => {
+    console.log('posting to webpage: ', emails);
+    // console.log(emails);
+}
+
+getAllUserEmails();
+
+// const postToWebsite = async (emails) => {
+//     const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+//         method: 'POST',
+//         body: JSON.stringify(emails),
+//         headers: {
+//             'Content-type': 'application/json; charset=UTF-8',
+//         },
+//     });
+//     const data = await response.json();
+//     console.log(data);
+// }
+
+const getDadJoke = async () => {
+    const response = await fetch('https://icanhazdadjoke.com/search?limit=2', {
+        headers: {
+            'Accept': 'application/json' // tell the api what type of data we want back
+            // 'Accept': 'text/plain'
+        },
+        method: 'GET',
+        // parameters: {
+        //     'limit': 25,
+        //     'term': 'cat'
+        // }
+    });
+    const data = await response.json();
+    // const data = await response.text();
+    console.log(data.results.length);
+    return data;
+}
+
+getDadJoke();
+
+// Sending data to an api
+const jokeObject = {
+    id: 'CAlG6MRnWnb',
+    joke: 'I just got fired from a florist, apparently I took too many leaves.',
+}
+
+const postJoke = async (joke) => {
+    const response = await fetch('https://httpbin.org/post', {
+        method: 'POST',
+        body: JSON.stringify(joke),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8', // tell the api what type of data we are sending
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+postJoke(jokeObject);
 
 
 
